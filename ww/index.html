@@ -1259,7 +1259,7 @@ async function summarizeAndClose() {
 - 작가가 바로 쓸 수 있게 간결하고 실용적으로
 - 불릿 포인트로 정리해줘`;
 
-  const msgs = [...chatHistory, { role: 'user', content: summaryPrompt }];
+  const recentHistory = chatHistory.slice(-10); const msgs = [...recentHistory, { role: 'user', content: summaryPrompt }];
 
   try {
     const res = await fetch('/.netlify/functions/claude', {
