@@ -22,7 +22,7 @@ exports.handler = async function(event) {
       'Authorization': 'Bearer ' + process.env.OPENROUTER_API_KEY
     },
     body: JSON.stringify({
-      model: 'meta-llama/llama-3.1-8b-instruct:free',
+      model: 'meta-llama/llama-3-8b-instruct:free',
       messages: JSON.parse(event.body).messages
     })
   });
