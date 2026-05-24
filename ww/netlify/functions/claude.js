@@ -22,7 +22,7 @@ exports.handler = async function(event) {
       'Authorization': 'Bearer ' + process.env.OPENROUTER_API_KEY
     },
     body: JSON.stringify({
-      model: 'meta-llama/llama-3-8b-instruct:free',
+      model: 'nvidia/nemotron-3-super-120b-a12b:free',
       messages: JSON.parse(event.body).messages
     })
   });
