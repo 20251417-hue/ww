@@ -22,7 +22,7 @@ exports.handler = async function(event) {
       'Authorization': 'Bearer ' + process.env.OPENROUTER_API_KEY
     },
     body: JSON.stringify({
-      model: 'anthropic/claude-sonnet-4',
+      model: 'anthropic/claude-3.5-sonnet',
       messages: JSON.parse(event.body).messages
     })
   });
