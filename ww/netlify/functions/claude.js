@@ -28,7 +28,8 @@ exports.handler = async function(event) {
   });
 
   const data = await response.json();
-  const reply = data.choices?.[0]?.message?.content || '응답을 받지 못했어요.';
+  console.log('OpenRouter response:', JSON.stringify(data));
+  const reply = data.choices?.[0]?.message?.content || JSON.stringify(data);
   return {
     statusCode: 200,
     headers: { 'Access-Control-Allow-Origin': '*' },
