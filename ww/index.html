@@ -488,21 +488,21 @@
 
 <script>
 const today = new Date(); today.setHours(0,0,0,0);
-let projects    = JSON.parse(localStorage.getItem('ww_projects')    || '[]');
-let workedDays  = JSON.parse(localStorage.getItem('ww_worked')      || '{}');
+let projects    = [];
+let workedDays  = {};
 let calStickers = JSON.parse(localStorage.getItem('ww_cal_stickers')|| '{}');
 let stickerLib  = JSON.parse(localStorage.getItem('ww_sticker_lib') || '[]');
 let freeStickers= JSON.parse(localStorage.getItem('ww_free_stickers')|| '[]'); // [{id,url,x,y}]
 let calYear = today.getFullYear(), calMonth = today.getMonth();
 
-function save() {
-  localStorage.setItem('ww_projects',     JSON.stringify(projects));
-  localStorage.setItem('ww_worked',       JSON.stringify(workedDays));
+async function save() {
   localStorage.setItem('ww_cal_stickers', JSON.stringify(calStickers));
   localStorage.setItem('ww_sticker_lib',  JSON.stringify(stickerLib));
   localStorage.setItem('ww_free_stickers',JSON.stringify(freeStickers));
+  const uid = 'user1';
+  await sb.from('projects').upsert({ user_id: uid, data: { projects, workedDays } }, { onConflict: 'user_id' });
 }
-
+  
 // ── 카드 테마 ──
 function applyCardTheme(theme) {
   const dark = theme === 'dark';
@@ -1294,6 +1294,19 @@ document.getElementById('summary-close-btn').addEventListener('click', () => {
   const SUPABASE_URL = 'https://fsqlqxwvzkhzflckfrsd.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzcWxxeHd2emtoemZsY2tmcnNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5ODY5OTcsImV4cCI6MjA5NjU2Mjk5N30.gTaPukk5lLhrj1KIWCTb-PAg0nzAFYideTmWKHzGb4s';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+async function loadFromSupabase() {
+  const uid = 'user1';
+  const { data } = await sb.from('projects').select('data').eq('user_id', uid).single();
+  if (data && data.data) {
+    projects = data.data.projects || [];
+    workedDays = data.data.workedDays || {};
+  }
+  renderProjects();
+  setTimeout(renderGraph, 100);
+  updateAlertBar();
+  renderCalendar();
+}
+loadFromSupabase();
 </script>
 </body>
 </html>
