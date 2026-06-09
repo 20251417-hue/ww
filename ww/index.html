@@ -267,6 +267,7 @@
       #alert-card, #cal-card, #projects-card, #calc-card { grid-column:1; }
     }
   </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -1290,6 +1291,9 @@ document.getElementById('summary-close-btn').addEventListener('click', () => {
   document.getElementById('summary-modal').classList.remove('open');
   chatHistory = [];
 });
+  const SUPABASE_URL = 'https://fsqlqxwvzkhzflckfrsd.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzcWxxeHd2emtoemZsY2tmcnNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5ODY5OTcsImV4cCI6MjA5NjU2Mjk5N30.gTaPukk5lLhrj1KIWCTb-PAg0nzAFYideTmWKHzGb4s';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 </script>
 </body>
 </html>
